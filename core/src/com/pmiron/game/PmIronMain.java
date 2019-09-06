@@ -26,13 +26,13 @@ public class PmIronMain extends ApplicationAdapter {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		if (Gdx.input.isKeyPressed(Input.Keys.W)){
-			y = y + 2;
+			y += 2;
 		} else if (Gdx.input.isKeyPressed(Input.Keys.S)){
-			y = y - 2;
+			y -= 2;
 		} else if (Gdx.input.isKeyPressed(Input.Keys.A)){
-			x = x - 2;
+			x -= 2;
 		} else if (Gdx.input.isKeyPressed(Input.Keys.D)){
-			x = x + 2;
+			x += 2;
 		}
 
 		batch.begin();
