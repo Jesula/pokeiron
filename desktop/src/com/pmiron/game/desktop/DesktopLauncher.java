@@ -10,8 +10,8 @@ public class DesktopLauncher {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 
 		config.title = "Pokemon Iron";
-		config.height = 144;
-		config.width = 160;
+		config.height = 400;
+		config.width = 600;
 
 		new LwjglApplication(new PmIronMain(), config);
 	}
