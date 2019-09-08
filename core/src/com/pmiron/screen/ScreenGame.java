@@ -1,5 +1,6 @@
 package com.pmiron.screen;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.pmiron.game.PmIronMain;
@@ -12,7 +13,7 @@ public class ScreenGame extends ScreenAbstract {
     public ScreenGame(PmIronMain app) {
         super(app);
 
-//        playerSprite = new Texture("sprites/scalderevo.png");
+        playerSprite = new Texture(Gdx.files.local("res/test.png"));
         spriteBatch = new SpriteBatch();
     }
 
@@ -23,7 +24,9 @@ public class ScreenGame extends ScreenAbstract {
 
     @Override
     public void render(float delta) {
-
+        spriteBatch.begin();
+        spriteBatch.draw(playerSprite, 0, 0, 56, 56);
+        spriteBatch.end();
     }
 
     @Override
