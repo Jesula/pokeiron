@@ -2,10 +2,13 @@ package com.pmiron.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.pmiron.controller.PlayerController;
 import com.pmiron.game.PmIronMain;
 import com.pmiron.game.Settings;
+import com.pmiron.util.AnimationSet;
 import model.Actor;
 import model.Camera;
 import model.TERRAIN;
@@ -30,8 +33,20 @@ public class ScreenGame extends ScreenAbstract {
         grassOne = new Texture(Gdx.files.local("res/grass_1.png"));
         spriteBatch = new SpriteBatch();
 
+        TextureAtlas atlas = app.getAssetManager().get("res/packed/textures.atlas", TextureAtlas.class);
+
+        AnimationSet animationSet = new AnimationSet(new Animation(0.5f/2, atlas.findRegions("fem_walk_north"), Animation.PlayMode.LOOP_PINGPONG),
+                new Animation(0.5f/2, atlas.findRegions("fem_walk_south"), Animation.PlayMode.LOOP_PINGPONG),
+                new Animation(0.5f/2, atlas.findRegions("fem_walk_east"), Animation.PlayMode.LOOP_PINGPONG),
+                new Animation(0.5f/2, atlas.findRegions("fem_walk_west"), Animation.PlayMode.LOOP_PINGPONG),
+                atlas.findRegion("fem_standing_north"),
+                atlas.findRegion("fem_standing_south"),
+                atlas.findRegion("fem_standing_east"),
+                atlas.findRegion("fem_standing_west")
+                );
+
         map = new TileMap(10, 10);
-        player = new Actor(map, 0, 0);
+        player = new Actor(map, 0, 0, animationSet);
         camera = new Camera();
 
         playerController = new PlayerController(player);
@@ -44,6 +59,8 @@ public class ScreenGame extends ScreenAbstract {
 
     @Override
     public void render(float delta) {
+       playerController.update(delta);
+
         player.update(delta);
         camera.updateCamera(player.getWorldX() + 0.5f, player.getWorldY() + 0.5f);
         spriteBatch.begin();
@@ -67,7 +84,7 @@ public class ScreenGame extends ScreenAbstract {
             }
         }
 
-        spriteBatch.draw(playerSprite,
+        spriteBatch.draw(player.getSprite(),
                 worldStartX+player.getWorldX()*Settings.SCALED_TILE_SIZE,
                 worldStartY+player.getWorldY()*Settings.SCALED_TILE_SIZE,
                 Settings.PLAYER_SPRITE_SIZE,
